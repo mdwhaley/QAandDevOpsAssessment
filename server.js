@@ -6,10 +6,22 @@ const { shuffleArray } = require("./utils");
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 
+// include and initialize the rollbar library with your access token
+var Rollbar = require("rollbar");
+var rollbar = new Rollbar({
+  accessToken: "151f02ad56d04dea811cec2b92285d25",
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+});
+
+// record a generic message and send it to Rollbar
+rollbar.log("Hello world!");
+
 app.get("/api/robots", (req, res) => {
   try {
     res.status(200).send(botsArr);
   } catch (error) {
+    rollbar.info("Someone hit this broken button");
     console.log("ERROR GETTING BOTS", error);
     res.sendStatus(400);
   }
@@ -17,6 +29,7 @@ app.get("/api/robots", (req, res) => {
 
 app.get("/api/robots/five", (req, res) => {
   try {
+    rollbar.info("Someone got the list of bots on page load");
     let shuffled = shuffleArray(bots);
     let choices = shuffled.slice(0, 5);
     let compDuo = shuffled.slice(6, 8);
@@ -30,7 +43,7 @@ app.get("/api/robots/five", (req, res) => {
 app.post("/api/duel", (req, res) => {
   try {
     // getting the duos from the front end
-
+    rollbar.info("Someone dueled");
     let { compDuo, playerDuo } = req.body;
 
     // adding up the computer player's total health and attack damage
@@ -69,6 +82,7 @@ app.post("/api/duel", (req, res) => {
 
 app.get("/api/player", (req, res) => {
   try {
+    rollbar.info("Someone lost because that is all they can do");
     res.status(200).send(playerRecord);
   } catch (error) {
     console.log("ERROR GETTING PLAYER STATS", error);
