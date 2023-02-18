@@ -118,7 +118,7 @@ const putBotBack = (id) => {
 };
 
 const drawFive = () => {
-  axios.get("http://18.117.216.101:4001/api/robots/five").then((res) => {
+  axios.get("http://18.117.216.101/api/robots/five").then((res) => {
     choices = res.data.choices;
     compDuo = res.data.compDuo;
     renderChoices();
@@ -137,7 +137,7 @@ const duel = () => {
     .forEach((btn) => btn.classList.add("hide"));
   setTimeout(() => {
     axios
-      .post("http://18.117.216.101:4001/api/duel", { compDuo, playerDuo })
+      .post("http://18.117.216.101/api/duel", { compDuo, playerDuo })
       .then(({ data }) => {
         resultsText.textContent = data;
         playAgainBtn.classList.remove("hide");
@@ -161,7 +161,7 @@ const reset = () => {
 
 const getPlayerStats = () => {
   axios
-    .get("http://18.117.216.101:4001/api/player")
+    .get("http://18.117.216.101/api/player")
     .then(({ data: { wins, losses } }) => {
       winsText.textContent = `Wins: ${wins}`;
       lossesTest.textContent = `Losses: ${losses}`;
@@ -169,7 +169,7 @@ const getPlayerStats = () => {
 };
 
 const getAllBots = () => {
-  axios.get("http://18.117.216.101:4001/api/robots").then(({ data }) => {
+  axios.get("http://18.117.216.101/api/robots").then(({ data }) => {
     allBotsDiv.innerHTML = "";
 
     data.forEach((bot) => {
