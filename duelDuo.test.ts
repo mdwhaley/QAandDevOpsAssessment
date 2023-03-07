@@ -6,7 +6,7 @@ require('chromedriver')
 const driver = new Builder().withCapabilities(Capabilities.chrome()).build()
 
 beforeEach(async () => {
-    driver.get('http://18.117.216.101/')
+    driver.get('https://18.117.216.101/')
 })
 
 afterAll(async () => {
